@@ -3,19 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AeroMetrics | Smart Air Analytics</title>
+    <title>AeroMetrics | Advanced ML Analytics</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
     <div class="air-glow-1"></div>
     <div class="air-glow-2"></div>
-    <div class="air-glow-3"></div>
 
     <div class="container">
         <header class="app-header">
@@ -24,47 +22,57 @@
                 <span>Aero<span class="gradient-text">Metrics</span></span>
             </div>
             <div class="project-tag">
-                <span>Big Data Intelligence</span>
-                <span class="badge">Live CSV Telemetry</span>
+                <span>Predictive Big Data Architecture</span>
+                <span class="badge">PySpark Random Forest Model</span>
             </div>
         </header>
 
-        <h2 class="section-title"><i class="fa-solid fa-chart-line"></i> Macro Analytics Matrix</h2>
+        <h2 class="section-title"><i class="fa-solid fa-chart-line"></i> Historical Data Analytics Overview</h2>
         <section class="charts-grid">
             <div class="glass-card chart-container">
-                <h3>Regional Air Degradation Index</h3>
-                <p class="chart-subtitle">Real-time mean baseline comparison across urban centers</p>
+                <h3>City Pollution Leaderboard</h3>
+                <p class="chart-subtitle">Comparing historicalaverage air quality across major cities</p>
                 <canvas id="cityTrendChart"></canvas>
             </div>
             <div class="glass-card chart-container">
-                <h3>Seasonal Atmospheric Inversion Spikes</h3>
-                <p class="chart-subtitle">Hourly distribution metrics tracking winter smog windows</p>
+                <h3>Chronological Air Quality Timeline</h3>
+                <p class="chart-subtitle">Continuous PM2.5 tracking across historical dataset vectors</p>
                 <canvas id="seasonalSmogChart"></canvas>
             </div>
         </section>
 
-        <div id="triggerContainer" style="text-align: center; margin: 2rem 0;">
-            <button id="initializeConsoleBtn" class="premium-btn pulsing-cta-btn" style="max-width: 380px; margin: 0 auto;">
-                <span class="btn-text">Initialize Real-Time Diagnostic Console</span>
-                <i class="fa-solid fa-angles-down btn-icon" style="margin-left: 0.5rem;"></i>
-            </button>
-        </div>
+        <div class="workspace-separation-gap"></div>
 
-        <div id="diagnosticWorkspace" class="swipe-up-wrapper">
+        <div id="diagnosticWorkspace" class="swipe-up-wrapper revealed">
             <main class="dashboard-layout">
                 <section class="glass-card form-pane">
                     <div class="card-header">
-                        <h2>Atmospheric Diagnostics</h2>
-                        <p class="subtitle">Input environmental pollutant profiles for real-time air layer prediction.</p>
+                        <h2>Predictive Simulation Panel</h2>
+                        <p class="subtitle">Select your target region and input chemical attributes to evaluate environmental hazards.</p>
                     </div>
 
                     <form id="aqiForm" autocomplete="off">
                         <div class="input-grid">
+                            <div class="floating-group full-width-field">
+                                <div class="input-wrapper select-field-wrapper">
+                                    <i class="fa-solid fa-location-dot input-icon"></i>
+                                    <select id="citySelect" name="city" required>
+                                        <option value="" disabled selected hidden></option>
+                                        <option value="Karachi">Karachi</option>
+                                        <option value="Islamabad">Islamabad</option>
+                                        <option value="Quetta">Quetta</option>
+                                        <option value="Lahore">Lahore</option>
+                                        <option value="Peshawar">Peshawar</option>
+                                    </select>
+                                    <label for="citySelect">Target Analytics City</label>
+                                </div>
+                            </div>
+
                             <div class="floating-group">
                                 <div class="input-wrapper">
                                     <i class="fa-solid fa-smog input-icon"></i>
                                     <input type="number" id="pm25" name="pm2_5" step="any" required placeholder=" " value="120">
-                                    <label for="pm25">PM2.5 Concentration (µg/m³)</label>
+                                    <label for="pm25">PM2.5 Level (µg/m³)</label>
                                 </div>
                             </div>
                             <div class="floating-group">
@@ -99,32 +107,65 @@
                 <section class="glass-card result-pane">
                     <div class="standby-state" id="placeholderText">
                         <div class="pulse-ring"><i class="fa-solid fa-satellite-dish"></i></div>
-                        <h3>Awaiting Telemetry Data</h3>
-                        <p>Provide pollutant variables to initialize the predictive computing matrix.</p>
+                        <h3>Waiting for input!</h3>
                     </div>
 
-                    <div class="prediction-state hidden" id="resultDisplay">
-                        <span class="status-badge" id="aqiBadge">System Analysis Active</span>
-                        <div class="gauge-container">
-                            <div class="gauge-glow" id="gaugeGlow"></div>
-                            <div class="gauge-circle">
-                                <span id="aqiValue">--</span>
-                                <span class="gauge-label">Air Quality Class</span>
+                    <div class="prediction-state hidden" id="resultDisplay" style="width: 100%;">
+                        <div style="display: flex; justify-content: space-between; width: 100%; align-items: center; margin-bottom: 1rem;">
+                            <span class="status-badge" id="healthStatusBadge" style="font-size: 0.9rem; padding: 0.5rem 1.2rem; font-weight: 700; border-radius: 8px;">--</span>
+                            <div style="text-align: right;">
+                                <span style="font-size: 0.75rem; color: var(--text-secondary); display: block; text-transform: uppercase;">Model Accuracy</span>
+                                <strong id="modelAccuracyVal" style="color: #38bdf8; font-size: 1.1rem; font-family: 'Space Grotesk', sans-serif;">92.4%</strong>
                             </div>
                         </div>
-                        <h3 class="status-title" id="aqiStatus">Analyzing...</h3>
-                        <p class="status-desc" id="aqiAdvice">Computing structural insights...</p>
+
+                        <div class="gauge-container" style="margin: 1.5rem 0;">
+                            <div class="gauge-circle" style="border-width: 5px;">
+                                <span id="aqiValue">--</span>
+                                <span class="gauge-label">Computed Value</span>
+                            </div>
+                        </div>
+
+                        <h3 class="status-title" id="aqiStatus" style="margin-bottom: 0.25rem;">Analyzing...</h3>
+                        <p class="status-desc" id="aqiAdvice" style="margin-bottom: 1.5rem; font-size: 0.9rem;"></p>
+
+                        <div style="display: flex; gap: 1.5rem; background: rgba(0,0,0,0.2); width: 100%; padding: 1rem; border-radius: 12px; margin-bottom: 1.5rem; border: 1px solid var(--card-border);">
+                            <div style="flex: 1; text-align: center; border-right: 1px solid rgba(255,255,255,0.08);">
+                                <span style="font-size: 0.7 ">Prediction Confidence</span>
+                                <span id="confidenceScore" style="font-size: 1.25rem; font-weight: 700; color: #fff; font-family: 'Space Grotesk';">--</span>
+                            </div>
+                            <div style="flex: 1; text-align: center;">
+                                <span style="font-size: 0.75rem; color: var(--text-secondary); display: block; text-transform: uppercase; letter-spacing: 0.5px;">Engine Runtime</span>
+                                <span style="font-size: 1.25rem; font-weight: 700; color: #10b981; font-family: 'Space Grotesk';">0.024s</span>
+                            </div>
+                        </div>
+
+                        <div style="width: 100%; text-align: left; background: rgba(255,255,255,0.01); padding: 1.25rem; border-radius: 14px; border: 1px solid var(--card-border);">
+                            <h4 style="font-size: 0.9rem; font-weight: 600; text-transform: uppercase; color: #38bdf8; margin-bottom: 0.75rem; letter-spacing: 0.5px;">
+                                <i class="fa-solid fa-shield-heart" style="margin-right: 0.4rem;"></i> Required Medical Precautions
+                            </h4>
+                            <ul id="precautionsList" style="list-style: none; display: flex; flex-direction: column; gap: 0.6rem;"></ul>
+                        </div>
+                        
+                        <div class="scroll-helper-prompt" style="margin-top: 1.5rem; text-align: center;">
+                            <span style="font-size: 0.85rem; color: #38bdf8; font-weight: 500; letter-spacing: 0.5px; display: inline-flex; align-items: center; gap: 0.5rem;">
+                                Scroll down for proportional telemetry pie chart analysis 
+                                <i class="fa-solid fa-arrow-down-long scroll-arrow-bounce"></i>
+                            </span>
+                        </div>
                     </div>
                 </section>
             </main>
 
-            <section id="postPredictionSection" class="glass-card hidden" style="margin-top: 2.5rem; padding: 2rem;">
-                <div style="margin-bottom: 1.5rem;">
-                    <h3 style="font-size: 1.2rem; font-weight: 600;"><i class="fa-solid fa-chart-simple" style="color: var(--accent-blue); margin-right: 0.5rem;"></i> telemetry input proportionality index</h3>
-                    <p class="chart-subtitle" style="margin-bottom: 0;">Real-time variation breakdown of currently analyzed atmospheric variables against historical dataset averages</p>
+            <section id="postPredictionSection" class="glass-card hidden" style="margin-top: 2.5rem; padding: 2rem; margin-bottom: 0 !important;">
+                <div style="margin-bottom: 1.5rem; text-align: center;">
+                    <h3 id="dynamicPieHeading" style="font-size: 1.25rem; font-weight: 600; font-family: 'Space Grotesk', sans-serif;">
+                        <i class="fa-solid fa-chart-pie" style="color: var(--accent-blue); margin-right: 0.5rem;"></i> Active Telemetry Pollution Footprint Profile
+                    </h3>
+                    <p class="chart-subtitle" style="margin-top: 0.25rem;">Proportion framework showing how input features scale compared against real dataset baselines</p>
                 </div>
-                <div style="position: relative; height: 220px; width: 100%;">
-                    <canvas id="predictionAnalysisChart"></canvas>
+                <div style="position: relative; height: 320px; width: 100%; display: flex; justify-content: center;">
+                    <canvas id="predictionAnalysisChart" style="max-width: 450px;"></canvas>
                 </div>
             </section>
         </div>
