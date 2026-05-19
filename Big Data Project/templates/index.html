@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AeroMetrics | Smart Air Analytics</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="air-glow-1"></div>
+    <div class="air-glow-2"></div>
+    <div class="air-glow-3"></div>
+
+    <div class="container">
+        <header class="app-header">
+            <div class="logo">
+                <i class="fa-solid fa-wind wind-icon"></i>
+                <span>Aero<span class="gradient-text">Metrics</span></span>
+            </div>
+            <div class="project-tag">
+                <span>Big Data Intelligence</span>
+                <span class="badge">Live CSV Telemetry</span>
+            </div>
+        </header>
+
+        <h2 class="section-title"><i class="fa-solid fa-chart-line"></i> Macro Analytics Matrix</h2>
+        <section class="charts-grid">
+            <div class="glass-card chart-container">
+                <h3>Regional Air Degradation Index</h3>
+                <p class="chart-subtitle">Real-time mean baseline comparison across urban centers</p>
+                <canvas id="cityTrendChart"></canvas>
+            </div>
+            <div class="glass-card chart-container">
+                <h3>Seasonal Atmospheric Inversion Spikes</h3>
+                <p class="chart-subtitle">Hourly distribution metrics tracking winter smog windows</p>
+                <canvas id="seasonalSmogChart"></canvas>
+            </div>
+        </section>
+
+        <div id="triggerContainer" style="text-align: center; margin: 2rem 0;">
+            <button id="initializeConsoleBtn" class="premium-btn pulsing-cta-btn" style="max-width: 380px; margin: 0 auto;">
+                <span class="btn-text">Initialize Real-Time Diagnostic Console</span>
+                <i class="fa-solid fa-angles-down btn-icon" style="margin-left: 0.5rem;"></i>
+            </button>
+        </div>
+
+        <div id="diagnosticWorkspace" class="swipe-up-wrapper">
+            <main class="dashboard-layout">
+                <section class="glass-card form-pane">
+                    <div class="card-header">
+                        <h2>Atmospheric Diagnostics</h2>
+                        <p class="subtitle">Input environmental pollutant profiles for real-time air layer prediction.</p>
+                    </div>
+
+                    <form id="aqiForm" autocomplete="off">
+                        <div class="input-grid">
+                            <div class="floating-group">
+                                <div class="input-wrapper">
+                                    <i class="fa-solid fa-smog input-icon"></i>
+                                    <input type="number" id="pm25" name="pm2_5" step="any" required placeholder=" " value="120">
+                                    <label for="pm25">PM2.5 Concentration (µg/m³)</label>
+                                </div>
+                            </div>
+                            <div class="floating-group">
+                                <div class="input-wrapper">
+                                    <i class="fa-solid fa-cloud input-icon"></i>
+                                    <input type="number" id="co" name="co" step="any" required placeholder=" " value="1600">
+                                    <label for="co">Carbon Monoxide (CO)</label>
+                                </div>
+                            </div>
+                            <div class="floating-group">
+                                <div class="input-wrapper">
+                                    <i class="fa-solid fa-mask-face input-icon"></i>
+                                    <input type="number" id="no2" name="no2" step="any" required placeholder=" " value="42">
+                                    <label for="no2">Nitrogen Dioxide (NO₂)</label>
+                                </div>
+                            </div>
+                            <div class="floating-group">
+                                <div class="input-wrapper">
+                                    <i class="fa-solid fa-temperature-half input-icon"></i>
+                                    <input type="number" id="temp" name="temperature_2m" step="any" required placeholder=" " value="24">
+                                    <label for="temp">Temperature (°C)</label>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" id="submitBtn" class="premium-btn">
+                            <span class="btn-text">Execute Spark Prediction</span>
+                            <i class="fa-solid fa-bolt btn-icon"></i>
+                        </button>
+                    </form>
+                </section>
+
+                <section class="glass-card result-pane">
+                    <div class="standby-state" id="placeholderText">
+                        <div class="pulse-ring"><i class="fa-solid fa-satellite-dish"></i></div>
+                        <h3>Awaiting Telemetry Data</h3>
+                        <p>Provide pollutant variables to initialize the predictive computing matrix.</p>
+                    </div>
+
+                    <div class="prediction-state hidden" id="resultDisplay">
+                        <span class="status-badge" id="aqiBadge">System Analysis Active</span>
+                        <div class="gauge-container">
+                            <div class="gauge-glow" id="gaugeGlow"></div>
+                            <div class="gauge-circle">
+                                <span id="aqiValue">--</span>
+                                <span class="gauge-label">Air Quality Class</span>
+                            </div>
+                        </div>
+                        <h3 class="status-title" id="aqiStatus">Analyzing...</h3>
+                        <p class="status-desc" id="aqiAdvice">Computing structural insights...</p>
+                    </div>
+                </section>
+            </main>
+
+            <section id="postPredictionSection" class="glass-card hidden" style="margin-top: 2.5rem; padding: 2rem;">
+                <div style="margin-bottom: 1.5rem;">
+                    <h3 style="font-size: 1.2rem; font-weight: 600;"><i class="fa-solid fa-chart-simple" style="color: var(--accent-blue); margin-right: 0.5rem;"></i> telemetry input proportionality index</h3>
+                    <p class="chart-subtitle" style="margin-bottom: 0;">Real-time variation breakdown of currently analyzed atmospheric variables against historical dataset averages</p>
+                </div>
+                <div style="position: relative; height: 220px; width: 100%;">
+                    <canvas id="predictionAnalysisChart"></canvas>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
