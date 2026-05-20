@@ -2,6 +2,33 @@
     --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1e38 50%, #090d16 100%);
     --card-bg: rgba(255, 255, 255, 0.03);
     --card-border: rgba(255, 255, 255, 0.08);
+    --text-primary: #ffffff;
+    --text-secondary: #ffffff;
+    --accent-blue: #38bdf8;
+}
+/* --- NEW VIDEO BACKGROUND --- */
+.video-container {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: -10;
+    overflow: hidden;
+}
+.video-container video {
+    width: 100%; height: 100%;
+    object-fit: cover;
+}
+.video-overlay {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(15, 23, 42, 0.678);
+}
+
+:root {
+    --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1e38 50%, #090d16 100%);
+    --card-bg: rgba(255, 255, 255, 0.03);
+    --card-border: rgba(255, 255, 255, 0.08);
     --text-primary: #f8fafc;
     --text-secondary: #94a3b8;
     --accent-blue: #38bdf8;
@@ -14,9 +41,10 @@
 }
 
 body {
-    background: var(--bg-gradient); color: var(--text-primary);
+    background: transparent; color: var(--text-primary);
     min-height: 100vh; position: relative; padding: 2.5rem 1.5rem;
 }
+/* ... Keep the rest of your existing CSS exactly as it is ... */
 
 .air-glow-1, .air-glow-2 {
     position: absolute; border-radius: 50%; filter: blur(140px); z-index: -1; opacity: 0.35; pointer-events: none;

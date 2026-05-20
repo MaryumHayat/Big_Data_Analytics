@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 health_status: payload.components_pm2_5 > 100 ? "UNHEALTHY" : "HEALTHY",
                 aqi_label: payload.components_pm2_5 > 100 ? `Smog Vector Risk (${payload.city})` : `Optimal Air Index (${payload.city})`,
                 aqi_desc: "Data compiled using static regional fallback evaluation matrices.",
-                color_theme: payload.components_pm2_5 > 100 ? "#f97316" : "#10b981",
+                color_theme: payload.components_pm2_5 > 100 ? "#d9bca7" : "#10b981",
                 prediction_confidence: 91.5,
                 precautions: payload.components_pm2_5 > 100 ? 
                     ["Wear a protective N95 mask outside.", "Curtail heavy training exercises."] : 
